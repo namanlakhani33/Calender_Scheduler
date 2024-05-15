@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "0.0.0.0:3000:3000"  # Adjust the port as needed
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "0.0.0.0:5000:5000"  # Adjust the port as needed
+    environment:
+      OPENAI_API_KEY: "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" 
+    volumes:
+      - ./backend:/app/backend
+      - db_data:/app/backend/instance
+
+volumes:
+  db_data:

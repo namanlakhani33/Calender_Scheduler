@@ -1,0 +1,17 @@
+FROM python:3.11-slim as build-flask
+WORKDIR /app/backend
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn
+COPY backend ./
+
+FROM build-flask as final
+EXPOSE 5000
+
+# Set environment variable to specify SQLite database file path
+ENV SQLITE_DB_PATH /app/backend/instance/calendar.db
+
+# CMD ["python", "app.py"]
+
+# Start the Flask app using Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
