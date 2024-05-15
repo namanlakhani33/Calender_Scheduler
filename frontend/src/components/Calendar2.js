@@ -241,7 +241,7 @@ class Calendar extends Component {
 
       <nav style={{ marginBottom: "20px", padding: "10px", backgroundColor: "#eee" }}>
       <a href="http://localhost:8501/" style={{ marginRight: "15px" }}>Coursera Recommendation</a>
-      <a href="http://localhost:3002/">YouTube Recommendation</a>
+      <a href="http://localhost:3005/">YouTube Recommendation</a>
       </nav>
 
 
@@ -254,6 +254,15 @@ class Calendar extends Component {
           multiLine={true}
           rows={2}
           style={{ width: "300px" }} // Adjust the width as needed
+        />
+          <FlatButton
+          label="Submit Command"
+          primary={true}
+          keyboardFocused={true}
+          onClick={() => {
+            this.handleCommandSubmit(this.state.command);
+          }}
+          style={{ marginLeft: "10px" }} // Add margin to separate from the TextField
         />
         <FlatButton
           floatingLabelText={<span style={{ fontWeight: 'bold', fontSize: '20px' }}>Enter Command</span>}

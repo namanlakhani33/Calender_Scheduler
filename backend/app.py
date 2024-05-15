@@ -44,10 +44,14 @@ def process_command():
         data = request.get_json()
         # print(data)
 
-        prompt = ("You are a calendar assistant that helps the user manage his or her calendar. You can add events, delete events, and view events. "
-          "From the following information, give me a string separated by commas that contains only "
-          "the event title, start time, end time, and description "
-          "for example: 'Meeting with John' from 2:00 PM to 4:00 PM to discuss project progress' here title will be Meeting with john, description will be discuss project progress and start time will be 2:00pm and end time will be 4:00pm {data['command']}")
+        prompt = ("You are a calendar assistant that helps the user manage his or her calendar. "
+          "You can add events, delete events, and view events. From the following information, "
+          "give me a string separated by commas that contains only the event title, start time, "
+          "end time, and description. For example: 'Meeting with John, 2:00 PM, 4:00 PM, discuss project progress'. "
+          "Here, the title will be 'Meeting with John', the description will be 'discuss project progress', "
+          "the start time will be '2:00 PM', and the end time will be '4:00 PM'. "
+          f"Command: {data['command']}")
+
 
         
         
