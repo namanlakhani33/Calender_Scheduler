@@ -6,6 +6,7 @@ import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
 import TimePicker from "material-ui/TimePicker";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "../Navbar.css";
 
 BigCalendar.momentLocalizer(moment);
 
@@ -28,20 +29,40 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    this.fetchEvents();
+    if (this.props.isAuthenticated) {
+      this.fetchEvents();
+    } 
+    else {
+      // Optionally handle the case where the user is not authenticated
+      console.log("Not authenticated: Access denied.");
+    }
+
+   
   }
 
   fetchEvents() {
-    fetch("http://localhost:5000/api/events")
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ events: data });
-      })
-      .catch((error) => console.error("Error:", error));
+    console.log("Fetching events...");
+    fetch("http://localhost:5000/api/events", {
+      credentials: 'include'  // Important for sessions
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      this.setState({ events: data });
+      console.log("Events fetched successfully:", data);
+    })
+    .catch(error => {
+      console.error("Error fetching events:", error);
+    });
   }
 
   handleCommandSubmit(command) {
     fetch("http://localhost:5000/api/process_command", {
+      
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -200,6 +221,7 @@ class Calendar extends Component {
 
   render() {
     console.log("render()");
+    
     const eventActions = [
       <FlatButton
         label="Cancel"
@@ -236,43 +258,41 @@ class Calendar extends Component {
         }}
       />,
     ];
+    if (!this.props.isAuthenticated) {
+      return <div>Please log in to access the calendar.</div>;
+    }
+      
+    
     return (
       <div id="Calendar">
 
-      <nav style={{ marginBottom: "20px", padding: "10px", backgroundColor: "#eee" }}>
-      <a href="http://localhost:8501/" style={{ marginRight: "15px" }}>Coursera Recommendation</a>
-      <a href="http://localhost:3005/">YouTube Recommendation</a>
+      <nav className="nav-bar">
+        <a href="http://localhost:8501/"  target="_blank" className="nav-button" style={{ marginRight: "15px" }}>Coursera Recommendation</a>
+        <a href="http://localhost:3005/"  target="_blank" className="nav-button">YouTube Recommendation</a>
       </nav>
 
 
-      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
-        <TextField
-          floatingLabelText="Enter Command"
-          onChange={(e) => {
-            this.setState({ command: e.target.value });
-          }}
-          multiLine={true}
-          rows={2}
-          style={{ width: "300px" }} // Adjust the width as needed
-        />
+      <div className="command-section">
+          <TextField
+            floatingLabelText="Enter Command"
+            onChange={(e) => {
+              this.setState({ command: e.target.value });
+            }}
+            multiLine={true}
+            rows={2}
+            className="command-input"
+          />
           <FlatButton
-          label="Submit Command"
-          primary={true}
-          keyboardFocused={true}
-          onClick={() => {
-            this.handleCommandSubmit(this.state.command);
-          }}
-          style={{ marginLeft: "10px" }} // Add margin to separate from the TextField
-        />
-        <FlatButton
-          floatingLabelText={<span style={{ fontWeight: 'bold', fontSize: '20px' }}>Enter Command</span>}
-          primary={true}
-          keyboardFocused={true}
-          onClick={() => {
-            this.handleCommandSubmit(this.state.command);
-          }}
-        />
-      </div>
+            label="Submit Command"
+            primary={true}
+            keyboardFocused={true}
+            onClick={() => {
+              this.handleCommandSubmit(this.state.command);
+            }}
+            className="command-button"
+          />
+          
+        </div>
 
         <BigCalendar
           events={this.state.events}
@@ -367,5 +387,7 @@ class Calendar extends Component {
     );
   }
 }
+
+
 
 export default Calendar;

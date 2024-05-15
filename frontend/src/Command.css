@@ -1,0 +1,36 @@
+/* Styles for command input section */
+.command-section {
+    display: flex;
+    justify-content: center; /* Center align the entire section */
+    align-items: center; /* Vertically align items */
+    margin-bottom: 20px;
+  }
+  
+.command-input {
+    width: 300px; /* Fixed width for the input */
+    margin-right: 10px; /* Space between the input and the button */
+  }
+  
+.command-button {
+    padding: 10px 20px; /* Padding for a better touch area */
+    background-color: #007BFF; /* A bright blue for the primary button */
+    color: white; /* White text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer; /* Cursor indicates clickable area */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+.command-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+.command-button:last-child {
+    margin-left: 10px; /* Additional spacing for the second button */
+  }
+  
+.command-input input, .command-input textarea {
+    border: 1px solid #ccc; /* Subtle border for the input */
+    border-radius: 4px; /* Rounded corners for the input */
+}
+  
