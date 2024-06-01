@@ -267,8 +267,8 @@ class Calendar extends Component {
       <div id="Calendar">
 
       <nav className="nav-bar">
-        <a href="http://localhost:8501/"  target="_blank" className="nav-button" style={{ marginRight: "15px" }}>Coursera Recommendation</a>
-        <a href="http://localhost:3005/"  target="_blank" className="nav-button">YouTube Recommendation</a>
+        <a href="http://localhost:8501/"   className="nav-button" style={{ marginRight: "15px" }}>Coursera Recommendation</a>
+        <a href="http://localhost:3005/"   className="nav-button">YouTube Recommendation</a>
       </nav>
 
 
@@ -303,6 +303,17 @@ class Calendar extends Component {
           selectable={true}
           onSelectEvent={(event) => this.handleEventSelected(event)}
           onSelectSlot={(slotInfo) => this.handleSlotSelected(slotInfo)}
+        />
+        <iframe 
+          src="http://localhost:8501/"
+          title="Coursera Recommendation"
+          style={{ width: '100%', height: '700px', border: 'none' }}
+        />
+
+        <iframe 
+          src="http://localhost:3005/"
+          title="YouTube Recommendation"
+          style={{ width: '100%', height: '1000px', border: 'none' }}
         />
 
         <Dialog
